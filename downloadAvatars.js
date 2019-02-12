@@ -16,17 +16,30 @@ function getRepoContributors(rOwner, rName, cb) {
       'Authorization': authorization
     }
   };
-
   request(options, function(err, res, body) {
     body = JSON.parse(body);
     cb(err, body);
   });
 }
+//----------------------------------------------
+function downloadImageByUrl(url, filepath) {
+  request.get(url)
+  .on('error', function (err) {
+    throw err; 
+  })
+  .pipe(fs.createWriteStream(filepath));
+}
 
+//----------------------------------------------Calling
 getRepoContributors("jquery", "jquery", function(err, result) {
   console.log("Errors:", err);
-  console.log("Result:", result);
+  for(var i = 0; i < result.length; i++) {
+    downloadImageByUrl(result[i].avatar_url,'./Testing/' + result[i].login + '.jpg');
+  }
 });
+
+
+
 
 /*
 // Below is for reference mainly
