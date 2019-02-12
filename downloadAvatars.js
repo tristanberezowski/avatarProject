@@ -41,7 +41,7 @@ if (!rOwner || !rName) {
 getRepoContributors(rOwner, rName, function(err, result) {
   console.log("Errors:", err);
   for(var i = 0; i < result.length; i++) {
-    downloadImageByUrl(result[i].avatar_url,'./Testing/' + result[i].login + '.jpg');
+    downloadImageByUrl(result[i].avatar_url,'./avatarPictures/' + result[i].login + '.jpg');
   }
 });
 
