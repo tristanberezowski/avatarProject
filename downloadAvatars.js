@@ -1,10 +1,6 @@
 // Tristan Berezowski
 // GitHub avatar download program init Feb 11 2019
 
-// require `request` and the Node `fs` (filesystem) module
-var request = require('request');
-var fs = require('fs');
-console.log('Welcome to the GitHub Avatar Downloader!');
 
 function getRepoContributors(rOwner, rName, cb) {
   var token = require('./hidden.js');
@@ -31,7 +27,18 @@ function downloadImageByUrl(url, filepath) {
 }
 
 //----------------------------------------------Calling
-getRepoContributors("jquery", "jquery", function(err, result) {
+
+var request = require('request');
+var fs = require('fs');
+console.log('Welcome to the GitHub Avatar Downloader!');
+var rOwner = process.argv[2];
+var rName = process.argv[3];
+if (!rOwner || !rName) {
+  console.log('Need to give RepoOwner followed by RepoName');
+  console.log('Example: node downloadAvatars.js jQuery jQuery');
+  return;
+}
+getRepoContributors(rOwner, rName, function(err, result) {
   console.log("Errors:", err);
   for(var i = 0; i < result.length; i++) {
     downloadImageByUrl(result[i].avatar_url,'./Testing/' + result[i].login + '.jpg');
