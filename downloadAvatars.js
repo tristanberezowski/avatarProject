@@ -7,14 +7,18 @@ var fs = require('fs');
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 function getRepoContributors(rOwner, rName, cb) {
+  var token = require('./hidden.js');
+  var authorization = 'token ' + token;
   var options = {
     url: "https://api.github.com/repos/" + rOwner + "/" + rName + "/contributors",
     headers: {
-      'User-Agent': 'request'
+      'User-Agent': 'request',
+      'Authorization': authorization
     }
   };
 
   request(options, function(err, res, body) {
+    body = JSON.parse(body);
     cb(err, body);
   });
 }
@@ -36,3 +40,5 @@ request.get('https://api.github.com/repos/jquery/jquery/contributors')
        })
        //.pipe(fs.createWriteStream('./downloaded.html'));
        */
+
+       // data = JSON.parse(data)
